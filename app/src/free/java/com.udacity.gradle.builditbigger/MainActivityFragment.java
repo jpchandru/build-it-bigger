@@ -1,5 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import com.android.bibandroidlibrary.BibAndroidLibraryActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,6 +33,8 @@ public class MainActivityFragment extends Fragment {
 
     private final String LOG_TAG = MainActivityFragment.class.getSimpleName();
     private PublisherInterstitialAd interstitialAd = null;
+    public String result = null;
+    private static final String RANDOM_JOKES = "RANDOM_JOKES";
     @BindView(R.id.button_view)
     Button button;
     @BindView(R.id.spinner_joke)
@@ -48,14 +53,12 @@ public class MainActivityFragment extends Fragment {
         ButterKnife.bind(this, view);
         interstitialAd = new PublisherInterstitialAd(Objects.requireNonNull(getContext()));
         interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
-        progressBar.setVisibility(View.GONE);
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
                 progressBar.setVisibility(View.VISIBLE);
                 tellJoke();
-                progressBar.setVisibility(View.GONE);
                 //fetch the next ad in prior
                 requestNewInterstitial();
             }
@@ -84,7 +87,6 @@ public class MainActivityFragment extends Fragment {
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     tellJoke();
-                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -94,6 +96,17 @@ public class MainActivityFragment extends Fragment {
                 .build();
         mAdView.loadAd(adRequest);
         return view;
+    }
+
+    /*
+    This is from postexecute asynch call.
+     */
+    public void launchBibAndroidLibraryActivity() {
+        Context context = getActivity();
+        Intent i = new Intent(context, BibAndroidLibraryActivity.class);
+        i.putExtra(RANDOM_JOKES, result);
+        context.startActivity(i);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void requestNewInterstitial() {
