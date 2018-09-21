@@ -45,4 +45,5 @@ public class MainActivityFragment extends Fragment {
     public void tellJoke() {
         new EndpointsAsyncTask().execute(this);
     }
+
 }

@@ -3,7 +3,6 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.util.Pair;
 import android.widget.Toast;
 
 import com.android.bibandroidlibrary.BibAndroidLibraryActivity;
@@ -56,7 +55,6 @@ public class EndpointsAsyncTask extends AsyncTask<MainActivityFragment, Void, St
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         Intent i = new Intent(context, BibAndroidLibraryActivity.class);
         i.putExtra(RANDOM_JOKES, result);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 }

@@ -23,31 +23,12 @@ public class EndpointsAsyncTaskTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivity = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * This test is a connected test to verify loading jokes via button click
+     */
     @Test
     public void buttonClickTest() {
         Espresso.onView(withId(R.id.button_view)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.random_joke)).check(matches(isDisplayed()));
     }
-
-
-    /*@Test
-    public void endpointsAsyncTaskTest() {
-        *//*onView(withId(R.id.button_view))
-                .check(matches(withText(R.string.button_text)));*//*
-
-        String result = null;
-        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
-        endpointsAsyncTask.execute();
-
-        try {
-            //Context context = InstrumentationRegistry.getContext();
-            result = endpointsAsyncTask.get();
-            Log.d("Result: ", "Retrieved a non-empty string successfully: " + result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertNotNull(result);
-    }*/
-
-
 }
